@@ -28,3 +28,5 @@ export default class SuperDialog extends HTMLElement {
     }
 
 }
+
+customElements.define('super-dialog', SuperDialog);
