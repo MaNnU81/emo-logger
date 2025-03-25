@@ -31,3 +31,5 @@ export default class SuperHeader extends HTMLElement {
     }
 
 }
+
+customElements.define('super-header', SuperHeader);

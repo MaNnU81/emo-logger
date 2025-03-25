@@ -1,3 +1,6 @@
-import './components/super-dialog.js';
-import './components/super-header.js';
-import './services/emo-services.js';
+
+
+
+import EmoService from './services/emo-services.js';
+import SuperDialog from './components/super-dialog.js';
+import SuperHeader from './components/super-header.js';
