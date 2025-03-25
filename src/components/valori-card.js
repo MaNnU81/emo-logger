@@ -54,15 +54,16 @@ get index (){
                 <strong>data: </strong><span>${this.valori.date}</span>
             </div>
         `;
-        const btn = document.createElement('button');
-        btn.appendChild(document.createTextNode('modifica'));
-        btn.addEventListener('click', () => {
-            const sDialog = document.getElementById('student-dialog');
-            sDialog.editStudent(this.student, this.index)
-        })
-        mainDiv.appendChild(btn);
-        this.shadow.appendChild(mainDiv);
-    }
+        const modificaBtn = document.createElement('button');
+    modificaBtn.textContent = 'Modifica';
+    modificaBtn.addEventListener('click', () => {
+        const modificaEvent = new CustomEvent('modifica-valore', { detail: { valore, index: valore.date } });
+        this.dispatchEvent(modificaEvent);
+    }); 
+    mainDiv.appendChild(modificaBtn);
+
+    this.shadow.appendChild(mainDiv);
+}
 
 
 

@@ -7,17 +7,15 @@ export default class EmoService {
 
 
 
-    async loadValori() {
-        this.valori = JSON.parse(localStorage.getItem('valori'));
-
-        if (!this.valori) {
-            this.valori = await this.getValoriFromJson()
-            this.saveValori(this.valori);
+     async loadValori() {
+        this.valori = JSON.parse(localStorage.getItem('valori')) ;
+    
+        if (!this.valori || !Array.isArray(this.valori)) {
+            this.valori = await this.getValoriFromJson();
+            this.saveValori();
         }
-        return console.log(this.valori);
-        
-        
-        
+    
+        return this.valori;
     }
 
 
@@ -31,8 +29,23 @@ export default class EmoService {
     
 
     saveValori(){
-        localStorage.setItem('students', JSON.stringify(this.valori));
+        localStorage.setItem('valori', JSON.stringify(this.valori));
         return this.valori;
+        
     }
 
+    editValore(valore) {
+        
+        // Trova l'indice dell'oggetto in base alla proprietà 'date'
+        const index = this.valori.findIndex(item => item.date === valore.date);
+    
+        if (index !== -1) {
+            this.valori[index] = valore; // Aggiorna l'oggetto esistente
+            this.saveValori(); // Salva l'array aggiornato in localStorage
+            return this.valori; 
+        } else {
+            console.log('Valore non trovato');
+            return null; // Puoi anche gestire un messaggio d'errore o un fallback
+        }
+    }
 }

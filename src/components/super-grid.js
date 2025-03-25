@@ -14,8 +14,21 @@ export default class SuperGrid extends HTMLElement {
         this.valori = await this.EmoServ.loadValori();
         this.style();
         this.render();
+    
+        const dialog = document.getElementById('valore-dialog');
+    
+        dialog.addEventListener('valore-deleted', (event) => {
+            const { index } = event.detail;
+            console.log('Valore da cancellare:', index);
+    
+            // Rimuovi il valore dal servizio
+            this.EmoServ.valori = this.EmoServ.valori.filter((valore) => valore.date !== index);
+            this.EmoServ.saveValori();
+    
+            // Aggiorna la griglia
+            this.render();
+        });
     }
-
   
 
     style() {
@@ -34,14 +47,14 @@ export default class SuperGrid extends HTMLElement {
 
         const main = document.createElement('div');
         main.classList.add('grid');
-        // main.innerHTML = '';
+        main.innerHTML = '';
 
 
         for (const valore of this.EmoServ.valori) {
 
             const card = document.createElement('valori-card');
             card.setAttribute('selected-valore', JSON.stringify(valore));
-    
+            card.EmoServ = this.EmoServ;
             main.appendChild(card);
         }
         this.shadow.appendChild(main);
